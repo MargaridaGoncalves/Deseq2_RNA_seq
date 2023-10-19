@@ -1,0 +1,229 @@
+---
+title: "Normalização Dataset 3"
+output: html_notebook
+---
+# Deseq2 Normalization
+
+```{r}
+
+# Clear variables
+rm(list=ls())
+#Get path
+path<-getwd(); path
+# Set path
+setwd(path)
+```
+
+##Livrarias Importantes
+```{r}
+library(BiocGenerics)
+library(BiocManager)
+library(edgeR)
+library(DESeq2)
+library(ggplot2)
+library(readr)
+library(dplyr)
+```
+
+## Combine counts from different files in one unique table
+
+#Call all the files
+
+```{r}
+
+GSM6160812 <- read_delim("C:/Users/Acer/OneDrive/Ambiente de Trabalho/ICVS/Dataset 3/GSM6160812.txt", 
+    delim = "\t", escape_double = FALSE, 
+    trim_ws = TRUE)
+
+
+GSM6160814 <- read_delim("C:/Users/Acer/OneDrive/Ambiente de Trabalho/ICVS/Dataset 3/GSM6160814.txt", 
+    delim = "\t", escape_double = FALSE, 
+    trim_ws = TRUE)
+
+GSM6160813 <- read_delim("C:/Users/Acer/OneDrive/Ambiente de Trabalho/ICVS/Dataset 3/GSM6160813.txt", 
+    delim = "\t", escape_double = FALSE, 
+    trim_ws = TRUE)
+
+
+GSM6160821 <- read_delim("C:/Users/Acer/OneDrive/Ambiente de Trabalho/ICVS/Dataset 3/GSM6160821.txt", 
+    delim = "\t", escape_double = FALSE, 
+    trim_ws = TRUE)
+
+
+GSM6160822 <- read_delim("C:/Users/Acer/OneDrive/Ambiente de Trabalho/ICVS/Dataset 3/GSM6160822.txt", 
+    delim = "\t", escape_double = FALSE, 
+    trim_ws = TRUE)
+
+
+GSM6160823 <- read_delim("C:/Users/Acer/OneDrive/Ambiente de Trabalho/ICVS/Dataset 3/GSM6160823.txt", 
+    delim = "\t", escape_double = FALSE, 
+    trim_ws = TRUE)
+```
+## Unite all the correct columns
+```{r}
+counts.table= c(GSM6160812,GSM6160813[,2],GSM6160814[,2],GSM6160821[,2],GSM6160822[,2],GSM6160823[,2])
+counts.table = as.data.frame(counts.table)
+head(counts.table)
+
+```
+
+
+## Save the counts table
+
+```{r}
+write.table(counts.table, file='C:/Users/Acer/OneDrive/Ambiente de Trabalho/ICVS/Dataset 3/count_table.txt', sep = "\t",col.names = NA)
+```
+
+
+```{r}
+
+# Clear variables
+rm(list=ls())
+#Get path
+path<-getwd(); path
+# Set path
+setwd(path)
+```
+
+
+```{r}
+count_table <- read_delim("C:/Users/Acer/OneDrive/Ambiente de Trabalho/ICVS/Dataset 3/count_table.txt", 
+    delim = "\t", escape_double = FALSE, 
+    col_types = cols(...1 = col_skip()), 
+    trim_ws = TRUE)
+
+head(count_table)
+```
+
+## Expression Matrix
+
+```{r}
+expression.matrix = count_table[,-1]
+```
+
+
+## Data info
+
+```{r}
+design_tags <- read_delim("C:/Users/Acer/OneDrive/Ambiente de Trabalho/ICVS/Dataset 3/design_tags.tsv", 
+    delim = "\t", escape_double = FALSE, 
+    col_names = FALSE, trim_ws = TRUE)
+
+head(design_tags)
+```
+
+## Rename columns
+
+```{r}
+data_info <- as.matrix(design_tags[, -1])
+rownames(data_info) <- design_tags$X1
+
+data_info = as.data.frame(data_info)
+data_info$X2 = as.factor(data_info$X2)
+
+levels(data_info$X2)
+levels(data_info$X2) <- c("Control", "tgfBeta")
+
+head(data_info)
+
+```
+## confirm that column names from expression matriz correspond to the row names of the data info
+
+```{r}
+all(rownames(data_info)==colnames(expression.matrix))
+```
+
+
+## Create a deseq object by importing the expression matrix and sample info
+
+```{r}
+
+dds <- DESeqDataSetFromMatrix(countData = expression.matrix,
+                              colData = data_info,
+                              design= ~ X2)
+
+dds <- DESeq(dds)
+resultsNames(dds) # lists the coefficients
+res <- results(dds, name="X2_tgfBeta_vs_Control")
+res
+```
+As noticeable, the row names are numbers instead of the Gene names, so next we will rename it
+
+```{r}
+names = c(count_table$Gene)
+
+rownames(dds) <- names
+head(dds)
+```
+It is better to filter the low count genes:
+
+##Filtering
+
+```{r}
+
+keep = rowSums(counts(dds) >= 10) >= min(table(data_info$X2))
+#>= min(table(data_info$X2))
+# this condition implies that we have to see counts >= 10 at least in 3 samples because min(table(data_info$X2)) = 3
+#see table(data_info$X2)
+
+dds<- dds[keep,]
+
+head(dds)
+```
+
+# Perform the statistical test(s) analysis to identify differentially expressed genes
+
+## First Method
+# standard analysis
+
+```{r}
+dds <- DESeq(dds)
+res <- results(dds)
+
+
+dds
+
+res = as.data.frame(res)
+
+head(res)
+
+```
+
+## Order DESeq results by padj
+
+```{r}
+res_ordered = res[order(res$pvalue),]
+head(res_ordered)
+```
+
+```{r}
+res05 <- results(dds, alpha=0.05)
+summary(res05)
+```
+
+```{r}
+sum(res05$padj < 0.05, na.rm=TRUE)
+# LFC > 0 + LFC < 0 = 47 + 45 = 92
+```
+# CONTINUE to filter by padj values and Log2FoldChange values
+res is the results from the dds 
+```{r}
+
+filtering <- res %>% filter(res$padj <0.05)
+
+filtering <- filtering %>% filter(abs(filtering$log2FoldChange) >1)
+
+filtering
+```
+
+
+
+# Variance stabelizing transformation
+VST: variance-stabilizing transformation
+
+```{r}
+vsd = vst(dds, blind = FALSE)
+```
+
+
+
