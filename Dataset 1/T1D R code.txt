@@ -1,0 +1,73 @@
+# 2 October 2021
+
+# R packages
+library(edgeR)
+library(rtracklayer)
+
+# Read sample information
+SampleInfo <- read.csv("T1D_RNAseq_SampleInfo.csv.gz",comment.char="",quote="\"",check.names=FALSE,row.names=1)
+Time <- factor(SampleInfo$time_point)
+levels(Time) <- c("Time2","Time1")
+T1D <- factor(SampleInfo$progressed_to_T1D)
+levels(T1D) <- c("NonProg","Prog")
+Group <- paste(Time,T1D,sep="_")
+
+# Read count matrix (available from GEO)
+Counts <- read.delim("GSE185190_T1D_RNAseq_counts.txt.gz",comment.char="",quote="",row.names=1)
+Counts <- as.matrix(Counts[,-1])
+
+# Read gene annotation (available from Genecode)
+gencode.s4 <- import("gencode.v35.primary_assembly.annotation.gtf.gz")
+gencode <- as.data.frame(gencode.s4)
+gencode <- gencode[gencode$type == "gene", ]
+gencode <- gencode[, colSums(is.na(gencode)) != nrow(gencode)]
+annotation <- gencode[match(rownames(Counts), gencode$gene_id), c(1:3, 5, 8:10)]
+
+# Create DGEList object
+DGE <- DGEList(Counts,group=Group,genes = annotation)
+
+# Filter out sex-linked and non-protein-coding genes
+DGE <- DGE[DGE$genes$gene_name != "XIST", , keep.lib.sizes = FALSE]
+DGE <- DGE[DGE$genes$seqnames != "chrY", , keep.lib.sizes = FALSE]
+DGE <- DGE[DGE$genes$gene_type == "protein_coding", , keep.lib.sizes = FALSE]
+DGE$genes$gene_id <- NULL
+DGE$genes$gene_type <- NULL
+
+#### CD4+ T cell analysis ####
+
+# Subset to CD4+ T cells
+DGE_CD4 <- DGE[, SampleInfo$cell_type=="CD4+ T"]
+Group <- DGE_CD4$samples$group
+
+# Filter low expressed genes
+is.exprs_CD4 <- filterByExpr(DGE_CD4, group = Group)
+DGE_CD4 <- DGE_CD4[is.exprs_CD4, , keep.lib.sizes = FALSE]
+
+# Normalize library sizes
+DGE_CD4 <- calcNormFactors(DGE_CD4, method = "TMM")
+
+# Subset sample information to CD4+ T cells
+SampleInfo_CD4 <- SampleInfo[SampleInfo$cell_type=="CD4+ T",]
+Subject <- SampleInfo_CD4$subject
+Age <- SampleInfo_CD4$age
+Subject <- SampleInfo_CD4$subject
+Batch <- factor(SampleInfo_CD4$data_set)
+
+# Fit linear model
+design_CD4 <- model.matrix(~0 + Group + Age + Batch)
+row.names(design_CD4) <- colnames(DGE_CD4)
+colnames(design_CD4) <- c(levels(Group),"Age","Batch2")
+fit_CD4 <- voomLmFit(DGE_CD4, design_CD4, block = Subject, sample.weights = TRUE)
+
+# Differential expression analysis
+cont_CD4 <- makeContrasts(
+  Time1_PvsNP = Time1_Prog - Time1_NonProg,
+  Time2_PvsNP = Time2_Prog - Time2_NonProg,
+  PvsNP = ((Time1_Prog + Time2_Prog)/2) - ((Time1_NonProg + Time2_Prog)/2),
+  levels = design_CD4)
+fit_CD4 <- contrasts.fit(fit_CD4, contrasts = cont_CD4)
+fit_CD4 <- eBayes(fit_CD4, robust = TRUE, trend = FALSE)
+summary(decideTests(fit_CD4))
+topTable(fit_CD4,coef=1)
+topTable(fit_CD4,coef=2)
+topTable(fit_CD4,coef=3)

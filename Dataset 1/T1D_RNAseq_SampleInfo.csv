@@ -1,0 +1,81 @@
+sample,title,source_name,organism,subject,sex,treatment,time_point,age,progressed_to_T1D,IAA,GADAb,IA2Ab,ZnT8A,cell_type,data_set,molecule,processed data file
+Subject01_Time1_B,Subject1 pre-clinical B cells,Peripheral blood,Homo sapien,1,Female,Placebo,Pre-clinical,7.1,No,1.1,51,158,2.2,B,B,total RNA,Subject01_Time1_B.txt.gz
+Subject01_Time1_CD4T,Subject1 pre-clinical CD4+ T cells,Peripheral blood,Homo sapien,1,Female,Placebo,Pre-clinical,7.1,No,1.1,51,158,2.2,CD4+ T,A batch 2,total RNA,Subject01_Time1_CD4T.txt.gz
+Subject01_Time1_CD8T,Subject1 pre-clinical CD8+ T cells,Peripheral blood,Homo sapien,1,Female,Placebo,Pre-clinical,7.1,No,1.1,51,158,2.2,CD8+ T,B,total RNA,Subject01_Time1_CD8T.txt.gz
+Subject01_Time1_NK,Subject1 pre-clinical NK cells,Peripheral blood,Homo sapien,1,Female,Placebo,Pre-clinical,7.1,No,1.1,51,158,2.2,NK,B,total RNA,Subject01_Time1_NK.txt.gz
+Subject01_Time2_B,Subject1 at-diagnosis B cells,Peripheral blood,Homo sapien,1,Female,Placebo,At-diagnosis (for progressor),10.1,No,0.3,86,64,NA,B,B,total RNA,Subject01_Time2_B.txt.gz
+Subject01_Time2_CD4T,Subject1 at-diagnosis CD4+ T cells,Peripheral blood,Homo sapien,1,Female,Placebo,At-diagnosis (for progressor),10.1,No,0.3,86,64,NA,CD4+ T,A batch 2,total RNA,Subject01_Time2_CD4T.txt.gz
+Subject01_Time2_CD8T,Subject1 at-diagnosis CD8+ T cells,Peripheral blood,Homo sapien,1,Female,Placebo,At-diagnosis (for progressor),10.1,No,0.3,86,64,NA,CD8+ T,B,total RNA,Subject01_Time2_CD8T.txt.gz
+Subject01_Time2_NK,Subject1 at-diagnosis NK cells,Peripheral blood,Homo sapien,1,Female,Placebo,At-diagnosis (for progressor),10.1,No,0.3,86,64,NA,NK,B,total RNA,Subject01_Time2_NK.txt.gz
+Subject03_Time1_B,Subject3 pre-clinical B cells,Peripheral blood,Homo sapien,3,Female,Placebo,Pre-clinical,5.8,Yes,2.4,72,89,0,B,B,total RNA,Subject03_Time1_B.txt.gz
+Subject03_Time1_CD4T,Subject3 pre-clinical CD4+ T cells,Peripheral blood,Homo sapien,3,Female,Placebo,Pre-clinical,5.8,Yes,2.4,72,89,0,CD4+ T,A batch 2,total RNA,Subject03_Time1_CD4T.txt.gz
+Subject03_Time1_CD8T,Subject3 pre-clinical CD8+ T cells,Peripheral blood,Homo sapien,3,Female,Placebo,Pre-clinical,5.8,Yes,2.4,72,89,0,CD8+ T,B,total RNA,Subject03_Time1_CD8T.txt.gz
+Subject03_Time1_NK,Subject3 pre-clinical NK cells,Peripheral blood,Homo sapien,3,Female,Placebo,Pre-clinical,5.8,Yes,2.4,72,89,0,NK,B,total RNA,Subject03_Time1_NK.txt.gz
+Subject03_Time2_B,Subject3 at-diagnosis B cells,Peripheral blood,Homo sapien,3,Female,Placebo,At-diagnosis (for progressor),9,Yes,2.7,62,77,NA,B,B,total RNA,Subject03_Time2_B.txt.gz
+Subject03_Time2_CD4T,Subject3 at-diagnosis CD4+ T cells,Peripheral blood,Homo sapien,3,Female,Placebo,At-diagnosis (for progressor),9,Yes,2.7,62,77,NA,CD4+ T,A batch 2,total RNA,Subject03_Time2_CD4T.txt.gz
+Subject03_Time2_CD8T,Subject3 at-diagnosis CD8+ T cells,Peripheral blood,Homo sapien,3,Female,Placebo,At-diagnosis (for progressor),9,Yes,2.7,62,77,NA,CD8+ T,B,total RNA,Subject03_Time2_CD8T.txt.gz
+Subject03_Time2_NK,Subject3 at-diagnosis NK cells,Peripheral blood,Homo sapien,3,Female,Placebo,At-diagnosis (for progressor),9,Yes,2.7,62,77,NA,NK,B,total RNA,Subject03_Time2_NK.txt.gz
+Subject04_Time1_B,Subject4 pre-clinical B cells,Peripheral blood,Homo sapien,4,Male,Insulin,Pre-clinical,13.8,Yes,0.4,21,11,0,B,B,total RNA,Subject04_Time1_B.txt.gz
+Subject04_Time1_CD4T,Subject4 pre-clinical CD4+ T cells,Peripheral blood,Homo sapien,4,Male,Insulin,Pre-clinical,13.8,Yes,0.4,21,11,0,CD4+ T,A batch 2,total RNA,Subject04_Time1_CD4T.txt.gz
+Subject04_Time1_CD8T,Subject4 pre-clinical CD8+ T cells,Peripheral blood,Homo sapien,4,Male,Insulin,Pre-clinical,13.8,Yes,0.4,21,11,0,CD8+ T,B,total RNA,Subject04_Time1_CD8T.txt.gz
+Subject04_Time1_NK,Subject4 pre-clinical NK cells,Peripheral blood,Homo sapien,4,Male,Insulin,Pre-clinical,13.8,Yes,0.4,21,11,0,NK,B,total RNA,Subject04_Time1_NK.txt.gz
+Subject04_Time2_B,Subject4 at-diagnosis B cells,Peripheral blood,Homo sapien,4,Male,Insulin,At-diagnosis (for progressor),14.8,Yes,0.4,41,22,NA,B,B,total RNA,Subject04_Time2_B.txt.gz
+Subject04_Time2_CD4T,Subject4 at-diagnosis CD4+ T cells,Peripheral blood,Homo sapien,4,Male,Insulin,At-diagnosis (for progressor),14.8,Yes,0.4,41,22,NA,CD4+ T,A batch 2,total RNA,Subject04_Time2_CD4T.txt.gz
+Subject04_Time2_CD8T,Subject4 at-diagnosis CD8+ T cells,Peripheral blood,Homo sapien,4,Male,Insulin,At-diagnosis (for progressor),14.8,Yes,0.4,41,22,NA,CD8+ T,B,total RNA,Subject04_Time2_CD8T.txt.gz
+Subject04_Time2_NK,Subject4 at-diagnosis NK cells,Peripheral blood,Homo sapien,4,Male,Insulin,At-diagnosis (for progressor),14.8,Yes,0.4,41,22,NA,NK,B,total RNA,Subject04_Time2_NK.txt.gz
+Subject05_Time1_B,Subject5 pre-clinical B cells,Peripheral blood,Homo sapien,5,Female,Placebo,Pre-clinical,13.8,No,1,22,0,0,B,B,total RNA,Subject05_Time1_B.txt.gz
+Subject05_Time1_CD4T,Subject5 pre-clinical CD4+ T cells,Peripheral blood,Homo sapien,5,Female,Placebo,Pre-clinical,13.8,No,1,22,0,0,CD4+ T,A batch 1,total RNA,Subject05_Time1_CD4T.txt.gz
+Subject05_Time1_CD8T,Subject5 pre-clinical CD8+ T cells,Peripheral blood,Homo sapien,5,Female,Placebo,Pre-clinical,13.8,No,1,22,0,0,CD8+ T,B,total RNA,Subject05_Time1_CD8T.txt.gz
+Subject05_Time1_NK,Subject5 pre-clinical NK cells,Peripheral blood,Homo sapien,5,Female,Placebo,Pre-clinical,13.8,No,1,22,0,0,NK,B,total RNA,Subject05_Time1_NK.txt.gz
+Subject05_Time2_B,Subject5 at-diagnosis B cells,Peripheral blood,Homo sapien,5,Female,Placebo,At-diagnosis (for progressor),16.8,No,0.3,6.2,0.5,NA,B,B,total RNA,Subject05_Time2_B.txt.gz
+Subject05_Time2_CD4T,Subject5 at-diagnosis CD4+ T cells,Peripheral blood,Homo sapien,5,Female,Placebo,At-diagnosis (for progressor),16.8,No,0.3,6.2,0.5,NA,CD4+ T,A batch 1,total RNA,Subject05_Time2_CD4T.txt.gz
+Subject05_Time2_CD8T,Subject5 at-diagnosis CD8+ T cells,Peripheral blood,Homo sapien,5,Female,Placebo,At-diagnosis (for progressor),16.8,No,0.3,6.2,0.5,NA,CD8+ T,B,total RNA,Subject05_Time2_CD8T.txt.gz
+Subject05_Time2_NK,Subject5 at-diagnosis NK cells,Peripheral blood,Homo sapien,5,Female,Placebo,At-diagnosis (for progressor),16.8,No,0.3,6.2,0.5,NA,NK,B,total RNA,Subject05_Time2_NK.txt.gz
+Subject06_Time1_B,Subject6 pre-clinical B cells,Peripheral blood,Homo sapien,6,Male,Insulin,Pre-clinical,7.8,Yes,0.6,28,114,7,B,B,total RNA,Subject06_Time1_B.txt.gz
+Subject06_Time1_CD4T,Subject6 pre-clinical CD4+ T cells,Peripheral blood,Homo sapien,6,Male,Insulin,Pre-clinical,7.8,Yes,0.6,28,114,7,CD4+ T,A batch 2,total RNA,Subject06_Time1_CD4T.txt.gz
+Subject06_Time1_CD8T,Subject6 pre-clinical CD8+ T cells,Peripheral blood,Homo sapien,6,Male,Insulin,Pre-clinical,7.8,Yes,0.6,28,114,7,CD8+ T,B,total RNA,Subject06_Time1_CD8T.txt.gz
+Subject06_Time1_NK,Subject6 pre-clinical NK cells,Peripheral blood,Homo sapien,6,Male,Insulin,Pre-clinical,7.8,Yes,0.6,28,114,7,NK,B,total RNA,Subject06_Time1_NK.txt.gz
+Subject06_Time2_B,Subject6 at-diagnosis B cells,Peripheral blood,Homo sapien,6,Male,Insulin,At-diagnosis (for progressor),10.7,Yes,0.9,4.8,113,NA,B,B,total RNA,Subject06_Time2_B.txt.gz
+Subject06_Time2_CD4T,Subject6 at-diagnosis CD4+ T cells,Peripheral blood,Homo sapien,6,Male,Insulin,At-diagnosis (for progressor),10.7,Yes,0.9,4.8,113,NA,CD4+ T,A batch 2,total RNA,Subject06_Time2_CD4T.txt.gz
+Subject06_Time2_CD8T,Subject6 at-diagnosis CD8+ T cells,Peripheral blood,Homo sapien,6,Male,Insulin,At-diagnosis (for progressor),10.7,Yes,0.9,4.8,113,NA,CD8+ T,B,total RNA,Subject06_Time2_CD8T.txt.gz
+Subject06_Time2_NK,Subject6 at-diagnosis NK cells,Peripheral blood,Homo sapien,6,Male,Insulin,At-diagnosis (for progressor),10.7,Yes,0.9,4.8,113,NA,NK,B,total RNA,Subject06_Time2_NK.txt.gz
+Subject07_Time1_B,Subject7 pre-clinical B cells,Peripheral blood,Homo sapien,7,Male,Placebo,Pre-clinical,7,Yes,1,11,137,0,B,B,total RNA,Subject07_Time1_B.txt.gz
+Subject07_Time1_CD4T,Subject7 pre-clinical CD4+ T cells,Peripheral blood,Homo sapien,7,Male,Placebo,Pre-clinical,7,Yes,1,11,137,0,CD4+ T,A batch 1,total RNA,Subject07_Time1_CD4T.txt.gz
+Subject07_Time1_CD8T,Subject7 pre-clinical CD8+ T cells,Peripheral blood,Homo sapien,7,Male,Placebo,Pre-clinical,7,Yes,1,11,137,0,CD8+ T,B,total RNA,Subject07_Time1_CD8T.txt.gz
+Subject07_Time1_NK,Subject7 pre-clinical NK cells,Peripheral blood,Homo sapien,7,Male,Placebo,Pre-clinical,7,Yes,1,11,137,0,NK,B,total RNA,Subject07_Time1_NK.txt.gz
+Subject07_Time2_B,Subject7 at-diagnosis B cells,Peripheral blood,Homo sapien,7,Male,Placebo,At-diagnosis (for progressor),9.9,Yes,1.1,11,84,NA,B,B,total RNA,Subject07_Time2_B.txt.gz
+Subject07_Time2_CD4T,Subject7 at-diagnosis CD4+ T cells,Peripheral blood,Homo sapien,7,Male,Placebo,At-diagnosis (for progressor),9.9,Yes,1.1,11,84,NA,CD4+ T,A batch 1,total RNA,Subject07_Time2_CD4T.txt.gz
+Subject07_Time2_CD8T,Subject7 at-diagnosis CD8+ T cells,Peripheral blood,Homo sapien,7,Male,Placebo,At-diagnosis (for progressor),9.9,Yes,1.1,11,84,NA,CD8+ T,B,total RNA,Subject07_Time2_CD8T.txt.gz
+Subject07_Time2_NK,Subject7 at-diagnosis NK cells,Peripheral blood,Homo sapien,7,Male,Placebo,At-diagnosis (for progressor),9.9,Yes,1.1,11,84,NA,NK,B,total RNA,Subject07_Time2_NK.txt.gz
+Subject08_Time1_B,Subject8 pre-clinical B cells,Peripheral blood,Homo sapien,8,Male,Insulin,Pre-clinical,13.1,No,1.8,28,54,83,B,B,total RNA,Subject08_Time1_B.txt.gz
+Subject08_Time1_CD4T,Subject8 pre-clinical CD4+ T cells,Peripheral blood,Homo sapien,8,Male,Insulin,Pre-clinical,13.1,No,1.8,28,54,83,CD4+ T,A batch 1,total RNA,Subject08_Time1_CD4T.txt.gz
+Subject08_Time1_CD8T,Subject8 pre-clinical CD8+ T cells,Peripheral blood,Homo sapien,8,Male,Insulin,Pre-clinical,13.1,No,1.8,28,54,83,CD8+ T,B,total RNA,Subject08_Time1_CD8T.txt.gz
+Subject08_Time1_NK,Subject8 pre-clinical NK cells,Peripheral blood,Homo sapien,8,Male,Insulin,Pre-clinical,13.1,No,1.8,28,54,83,NK,B,total RNA,Subject08_Time1_NK.txt.gz
+Subject08_Time2_B,Subject8 at-diagnosis B cells,Peripheral blood,Homo sapien,8,Male,Insulin,At-diagnosis (for progressor),16.2,No,1,24,69,NA,B,B,total RNA,Subject08_Time2_B.txt.gz
+Subject08_Time2_CD4T,Subject8 at-diagnosis CD4+ T cells,Peripheral blood,Homo sapien,8,Male,Insulin,At-diagnosis (for progressor),16.2,No,1,24,69,NA,CD4+ T,A batch 1,total RNA,Subject08_Time2_CD4T.txt.gz
+Subject08_Time2_CD8T,Subject8 at-diagnosis CD8+ T cells,Peripheral blood,Homo sapien,8,Male,Insulin,At-diagnosis (for progressor),16.2,No,1,24,69,NA,CD8+ T,B,total RNA,Subject08_Time2_CD8T.txt.gz
+Subject08_Time2_NK,Subject8 at-diagnosis NK cells,Peripheral blood,Homo sapien,8,Male,Insulin,At-diagnosis (for progressor),16.2,No,1,24,69,NA,NK,B,total RNA,Subject08_Time2_NK.txt.gz
+Subject09_Time1_B,Subject9 pre-clinical B cells,Peripheral blood,Homo sapien,9,Female,Placebo,Pre-clinical,10,No,1,76,0.5,12,B,B,total RNA,Subject09_Time1_B.txt.gz
+Subject09_Time1_CD4T,Subject9 pre-clinical CD4+ T cells,Peripheral blood,Homo sapien,9,Female,Placebo,Pre-clinical,10,No,1,76,0.5,12,CD4+ T,A batch 1,total RNA,Subject09_Time1_CD4T.txt.gz
+Subject09_Time1_CD8T,Subject9 pre-clinical CD8+ T cells,Peripheral blood,Homo sapien,9,Female,Placebo,Pre-clinical,10,No,1,76,0.5,12,CD8+ T,B,total RNA,Subject09_Time1_CD8T.txt.gz
+Subject09_Time1_NK,Subject9 pre-clinical NK cells,Peripheral blood,Homo sapien,9,Female,Placebo,Pre-clinical,10,No,1,76,0.5,12,NK,B,total RNA,Subject09_Time1_NK.txt.gz
+Subject09_Time2_B,Subject9 at-diagnosis B cells,Peripheral blood,Homo sapien,9,Female,Placebo,At-diagnosis (for progressor),11.9,No,1.2,45,0,NA,B,B,total RNA,Subject09_Time2_B.txt.gz
+Subject09_Time2_CD4T,Subject9 at-diagnosis CD4+ T cells,Peripheral blood,Homo sapien,9,Female,Placebo,At-diagnosis (for progressor),11.9,No,1.2,45,0,NA,CD4+ T,A batch 1,total RNA,Subject09_Time2_CD4T.txt.gz
+Subject09_Time2_CD8T,Subject9 at-diagnosis CD8+ T cells,Peripheral blood,Homo sapien,9,Female,Placebo,At-diagnosis (for progressor),11.9,No,1.2,45,0,NA,CD8+ T,B,total RNA,Subject09_Time2_CD8T.txt.gz
+Subject09_Time2_NK,Subject9 at-diagnosis NK cells,Peripheral blood,Homo sapien,9,Female,Placebo,At-diagnosis (for progressor),11.9,No,1.2,45,0,NA,NK,B,total RNA,Subject09_Time2_NK.txt.gz
+Subject11_Time1_B,Subject11 pre-clinical B cells,Peripheral blood,Homo sapien,11,Male,Insulin,Pre-clinical,5,Yes,2.5,82,13,0,B,B,total RNA,Subject11_Time1_B.txt.gz
+Subject11_Time1_CD4T,Subject11 pre-clinical CD4+ T cells,Peripheral blood,Homo sapien,11,Male,Insulin,Pre-clinical,5,Yes,2.5,82,13,0,CD4+ T,A batch 1,total RNA,Subject11_Time1_CD4T.txt.gz
+Subject11_Time1_CD8T,Subject11 pre-clinical CD8+ T cells,Peripheral blood,Homo sapien,11,Male,Insulin,Pre-clinical,5,Yes,2.5,82,13,0,CD8+ T,B,total RNA,Subject11_Time1_CD8T.txt.gz
+Subject11_Time1_NK,Subject11 pre-clinical NK cells,Peripheral blood,Homo sapien,11,Male,Insulin,Pre-clinical,5,Yes,2.5,82,13,0,NK,B,total RNA,Subject11_Time1_NK.txt.gz
+Subject11_Time2_B,Subject11 at-diagnosis B cells,Peripheral blood,Homo sapien,11,Male,Insulin,At-diagnosis (for progressor),9,Yes,1.1,74,67,NA,B,B,total RNA,Subject11_Time2_B.txt.gz
+Subject11_Time2_CD4T,Subject11 at-diagnosis CD4+ T cells,Peripheral blood,Homo sapien,11,Male,Insulin,At-diagnosis (for progressor),9,Yes,1.1,74,67,NA,CD4+ T,A batch 1,total RNA,Subject11_Time2_CD4T.txt.gz
+Subject11_Time2_CD8T,Subject11 at-diagnosis CD8+ T cells,Peripheral blood,Homo sapien,11,Male,Insulin,At-diagnosis (for progressor),9,Yes,1.1,74,67,NA,CD8+ T,B,total RNA,Subject11_Time2_CD8T.txt.gz
+Subject11_Time2_NK,Subject11 at-diagnosis NK cells,Peripheral blood,Homo sapien,11,Male,Insulin,At-diagnosis (for progressor),9,Yes,1.1,74,67,NA,NK,B,total RNA,Subject11_Time2_NK.txt.gz
+Subject12_Time1_B,Subject12 pre-clinical B cells,Peripheral blood,Homo sapien,12,Male,Insulin,Pre-clinical,10.3,No,0.3,29,103,0.4,B,B,total RNA,Subject12_Time1_B.txt.gz
+Subject12_Time1_CD4T,Subject12 pre-clinical CD4+ T cells,Peripheral blood,Homo sapien,12,Male,Insulin,Pre-clinical,10.3,No,0.3,29,103,0.4,CD4+ T,A batch 2,total RNA,Subject12_Time1_CD4T.txt.gz
+Subject12_Time1_CD8T,Subject12 pre-clinical CD8+ T cells,Peripheral blood,Homo sapien,12,Male,Insulin,Pre-clinical,10.3,No,0.3,29,103,0.4,CD8+ T,B,total RNA,Subject12_Time1_CD8T.txt.gz
+Subject12_Time1_NK,Subject12 pre-clinical NK cells,Peripheral blood,Homo sapien,12,Male,Insulin,Pre-clinical,10.3,No,0.3,29,103,0.4,NK,B,total RNA,Subject12_Time1_NK.txt.gz
+Subject12_Time2_B,Subject12 at-diagnosis B cells,Peripheral blood,Homo sapien,12,Male,Insulin,At-diagnosis (for progressor),13.4,No,0.4,9.4,215,NA,B,B,total RNA,Subject12_Time2_B.txt.gz
+Subject12_Time2_CD4T,Subject12 at-diagnosis CD4+ T cells,Peripheral blood,Homo sapien,12,Male,Insulin,At-diagnosis (for progressor),13.4,No,0.4,9.4,215,NA,CD4+ T,A batch 2,total RNA,Subject12_Time2_CD4T.txt.gz
+Subject12_Time2_CD8T,Subject12 at-diagnosis CD8+ T cells,Peripheral blood,Homo sapien,12,Male,Insulin,At-diagnosis (for progressor),13.4,No,0.4,9.4,215,NA,CD8+ T,B,total RNA,Subject12_Time2_CD8T.txt.gz
+Subject12_Time2_NK,Subject12 at-diagnosis NK cells,Peripheral blood,Homo sapien,12,Male,Insulin,At-diagnosis (for progressor),13.4,No,0.4,9.4,215,NA,NK,B,total RNA,Subject12_Time2_NK.txt.gz

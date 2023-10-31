@@ -1,0 +1,13 @@
+Data files and R code for
+Cytotoxic CD4+ T cells are markers of progression to type 1 diabetes
+
+
+Authors: Naiara G. Bediaga, Alexandra L. Garnham, Gaetano Naselli1, 
+Esther Bandala-Sanchez, Natalie L. Stone, Joanna Cobb, Jessica E. Harbison,
+John M. Wentworth, Annette G. Ziegler, 
+Jennifer J Couper, Gordon K. Smyth, Leonard C. Harrison
+
+Retirado de: https://bioinf.wehi.edu.au/resources/BediagaT1D2021/
+The following data files are needed for the differential expression analysis: 
+The read counts are available from GEO accession GSE185191. 
+The gene annotation is available from Genecode.

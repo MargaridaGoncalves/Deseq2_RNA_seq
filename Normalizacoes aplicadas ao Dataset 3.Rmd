@@ -2,77 +2,6 @@
 title: "Normalização Dataset 3"
 output: html_notebook
 ---
-# Deseq2 Normalization
-
-```{r}
-
-# Clear variables
-rm(list=ls())
-#Get path
-path<-getwd(); path
-# Set path
-setwd(path)
-```
-
-##Livrarias Importantes
-```{r}
-library(BiocGenerics)
-library(BiocManager)
-library(edgeR)
-library(DESeq2)
-library(ggplot2)
-library(readr)
-library(dplyr)
-```
-
-## Combine counts from different files in one unique table
-
-#Call all the files
-
-```{r}
-
-GSM6160812 <- read_delim("C:/Users/Acer/OneDrive/Ambiente de Trabalho/ICVS/Dataset 3/GSM6160812.txt", 
-    delim = "\t", escape_double = FALSE, 
-    trim_ws = TRUE)
-
-
-GSM6160814 <- read_delim("C:/Users/Acer/OneDrive/Ambiente de Trabalho/ICVS/Dataset 3/GSM6160814.txt", 
-    delim = "\t", escape_double = FALSE, 
-    trim_ws = TRUE)
-
-GSM6160813 <- read_delim("C:/Users/Acer/OneDrive/Ambiente de Trabalho/ICVS/Dataset 3/GSM6160813.txt", 
-    delim = "\t", escape_double = FALSE, 
-    trim_ws = TRUE)
-
-
-GSM6160821 <- read_delim("C:/Users/Acer/OneDrive/Ambiente de Trabalho/ICVS/Dataset 3/GSM6160821.txt", 
-    delim = "\t", escape_double = FALSE, 
-    trim_ws = TRUE)
-
-
-GSM6160822 <- read_delim("C:/Users/Acer/OneDrive/Ambiente de Trabalho/ICVS/Dataset 3/GSM6160822.txt", 
-    delim = "\t", escape_double = FALSE, 
-    trim_ws = TRUE)
-
-
-GSM6160823 <- read_delim("C:/Users/Acer/OneDrive/Ambiente de Trabalho/ICVS/Dataset 3/GSM6160823.txt", 
-    delim = "\t", escape_double = FALSE, 
-    trim_ws = TRUE)
-```
-## Unite all the correct columns
-```{r}
-counts.table= c(GSM6160812,GSM6160813[,2],GSM6160814[,2],GSM6160821[,2],GSM6160822[,2],GSM6160823[,2])
-counts.table = as.data.frame(counts.table)
-head(counts.table)
-
-```
-
-
-## Save the counts table
-
-```{r}
-write.table(counts.table, file='C:/Users/Acer/OneDrive/Ambiente de Trabalho/ICVS/Dataset 3/count_table.txt', sep = "\t",col.names = NA)
-```
 
 
 ```{r}
@@ -224,6 +153,8 @@ VST: variance-stabilizing transformation
 ```{r}
 vsd = vst(dds, blind = FALSE)
 ```
+
+
 
 
 

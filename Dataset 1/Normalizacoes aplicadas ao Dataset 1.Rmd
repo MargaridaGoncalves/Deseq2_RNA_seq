@@ -1,0 +1,530 @@
+---
+title: "Dataset 1"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+```{r}
+
+# Clear variables
+rm(list=ls())
+#Get path
+path<-getwd(); path
+# Set path
+setwd(path)
+```
+##Livrarias Importantes
+```{r}
+library(BiocGenerics)
+library(BiocManager)
+library(edgeR)
+library(DESeq2)
+library(ggplot2)
+library(readr)
+library(gprofiler2)
+library(clustifyr)
+library(org.Hs.eg.db)
+library(org.Mm.eg.db)
+library(clusterProfiler)
+library(AnnotationDbi)
+library(EnhancedVolcano)
+```
+
+
+## Data from:
+
+https://bioinf.wehi.edu.au/resources/BediagaT1D2021/
+
+```{r}
+load('T1D_RNAseq_counts.RData')
+```
+
+```{r}
+head(T1D_RNAseq_counts)
+```
+
+
+##Expression Matrix
+
+```{r}
+expression.matrix = T1D_RNAseq_counts [,-2]
+expression.matrix
+```
+
+## Sample Info
+
+```{r}
+load('T1D_RNAseq_SampleInfo.RData')
+```
+
+```{r}
+head(T1D_RNAseq_SampleInfo)
+```
+
+
+
+##Deseq2
+
+```{r}
+expression.matrix1 = expression.matrix[,-1]
+expression.matrix1
+```
+
+## Set info as factors
+
+```{r}
+T1D_RNAseq_SampleInfo$treatment = as.factor(T1D_RNAseq_SampleInfo$treatment)
+T1D_RNAseq_SampleInfo$time_point = as.factor(T1D_RNAseq_SampleInfo$time_point)
+
+T1D_RNAseq_SampleInfo$cell_type = as.factor(T1D_RNAseq_SampleInfo$cell_type)
+```
+
+
+## Change the row names
+
+```{r}
+row.names(T1D_RNAseq_SampleInfo) <- sub("Subject", "", row.names(T1D_RNAseq_SampleInfo))
+
+T1D_RNAseq_SampleInfo
+
+
+colnames(expression.matrix1) <- sub("S", "", colnames(expression.matrix1))
+expression.matrix1
+```
+
+
+## Create a deseq object by importing the expression matrix and sample info
+
+```{r}
+dds <- DESeqDataSetFromMatrix(countData = expression.matrix1,
+                              colData = T1D_RNAseq_SampleInfo,
+                              design= ~ time_point + cell_type + treatment)
+
+vetor = c(expression.matrix$Gene_id)
+
+rownames(dds) <- vetor
+
+dds <- DESeq(dds)
+resultsNames(dds) # lists the coefficients
+res <- results(dds, name="treatment_Placebo_vs_Insulin")
+res
+```
+
+## dds as factor
+
+```{r}
+dds$treatment = factor(dds$treatment, levels = c("Placebo", "Insulin"))
+```
+
+
+## Filter the genes
+
+It is important to know the rule to select the minimum number for the keep
+see the reported values
+
+```{r}
+Keep <- rowSums(counts(dds) >= 5) >= min(table(T1D_RNAseq_SampleInfo$treatment))
+dds <- dds[Keep,]
+
+dds
+```
+
+
+# Perform the statistical test(s) analysis to identify differentially expressed genes
+# with this we will find genes differentially expressed (DE) in Insulin vs Placebo: 
+
+```{r}
+dds = DESeq(dds)
+Deseq_results = results(dds)
+
+sum(Deseq_results$padj < 0.05, na.rm=TRUE)
+
+Deseq_results
+```
+
+
+
+apeglm provides Bayesian shrinkage estimators for effect sizes for a variety of GLM models, using approximation of the posterior for individual coefficients:
+
+## Remove the noise associated with low count genes
+```{r}
+
+#resLFC1 <- lfcShrink(dds, coef=2, type="apeglm")
+#resLFC1
+
+
+#resLFC2 <- lfcShrink(dds, coef=3, type="apeglm")
+#resLFC2
+
+#resLFC3 <- lfcShrink(dds, coef=4, type="apeglm")
+#resLFC3
+
+#resLFC4 <- lfcShrink(dds, coef=5, type="apeglm")
+#resLFC4
+
+# we will find genes differentially expressed (DE) in Insulin vs Placebo: 
+resLFC5 <- lfcShrink(dds, coef=6, type="apeglm")
+resLFC5
+
+
+#resLFC6 <- lfcShrink(dds, coef=6, type="normal")
+#resLFC6
+
+
+```
+
+
+
+Here we are doing the same thing as in line 106 but instead we select the alpha value
+
+padj < 0.05 to be significative
+
+Usually, we use FDR>=0.05 & |log2FC| >=1
+
+```{r}
+res05 <- results(dds, alpha=0.05)
+summary(res05)
+
+
+sum(res05$padj < 0.05, na.rm=TRUE)
+```
+
+
+Order the result table by p-values:
+
+```{r}
+deseq_res_ordered = Deseq_results[order(Deseq_results$pvalue),]
+head(deseq_res_ordered)
+```
+
+## See if an ID is significantly differentially expressed
+
+```{r}
+
+Deseq_results["ENSG00000000971.16",]
+
+```
+
+## Extract the most differentially expressed genes
+due to treatment
+
+padj == adjusted p-value
+
+FDR >= 0.05 -> false discovery rate
+|log2fold change| = >1
+
+```{r}
+library(dplyr)
+
+Deseq_results1 = as.data.frame(Deseq_results)
+
+
+filtering <- Deseq_results1 %>% filter(Deseq_results1$padj <0.05)
+
+filtering <- filtering %>% filter(abs(filtering$log2FoldChange) >1)
+
+filtering
+
+#temos 210 genes differentially expressed
+```
+
+
+
+
+
+In DESeq2, the function plotMA shows the log2 fold changes attributable to a given variable over the mean of normalized counts for all the samples in the DESeqDataSet. Points will be colored red if the adjusted p value is less than 0.1. Points which fall out of the window are plotted as open triangles pointing either up or down.
+
+```{r}
+
+
+plotMA(Deseq_results, ylim=c(-2,2))
+```
+
+It is more useful visualize the MA-plot for the shrunken log2 fold changes, which remove the noise associated with log2 fold changes from low count genes without requiring arbitrary filtering thresholds.
+
+```{r}
+plotMA(resLFC5, ylim=c(-2,2))
+```
+
+After calling plotMA, one can use the function identify to interactively detect the row number of individual genes by clicking on the plot. One can then recover the gene identifiers by saving the resulting indices:
+
+
+
+
+```{r}
+plotCounts(dds, gene=which.min(resLFC5$padj), intgroup="treatment")
+
+plotCounts(dds, gene="ENSG00000000971.16", intgroup="treatment")
+```
+
+## Call the normalized counts
+
+```{r}
+normalized_counts <- counts(dds, normalized = TRUE)
+head(normalized_counts)
+
+not_normalized_counts <- counts(dds, normalized = F)
+head(not_normalized_counts)
+
+```
+
+
+
+vsn transformation:
+
+```{r}
+ntd <- normTransform(dds)
+library("vsn")
+meanSdPlot(assay(ntd))
+```
+
+
+
+
+```{r}
+library(ggplot2)
+Deseq_results2 <- as.data.frame(Deseq_results)
+
+# Determine point colors based on significance and sign of the logFC
+# We would normally use adj.P.Value instead of P.Value
+Deseq_results2 <-Deseq_results2 %>% 
+  mutate(point_color = case_when(
+    pvalue < 0.05 & log2FoldChange < 0 ~ "down", # significantly down
+    pvalue < 0.05 & log2FoldChange > 0 ~ "up", # significantly up
+    TRUE ~ "Not differentially expressed") # not significant
+  )
+
+# Color points
+v1 <- ggplot(data=Deseq_results2, aes(x=log2FoldChange, y=-log10(pvalue))) + geom_point() + theme_minimal()
+
+v1
+
+
+
+de <- Deseq_results2[complete.cases(Deseq_results2), ]
+
+# add a column of NAs
+de$diffexpressed <- "NO"
+# if log2Foldchange > 0.6 and pvalue < 0.05, set as "UP" 
+de$diffexpressed[de$log2FoldChange > 0.6 & de$pvalue < 0.05] <- "UP"
+# if log2Foldchange < -0.6 and pvalue < 0.05, set as "DOWN"
+de$diffexpressed[de$log2FoldChange < -0.6 & de$pvalue < 0.05] <- "DOWN"
+
+# Re-plot but this time color the points with "diffexpressed"
+p <- ggplot(data=de, aes(x=log2FoldChange, y=-log10(pvalue), col=diffexpressed)) + geom_point() + theme_minimal()
+
+p
+
+
+
+de$RefSeq <- rownames(de)
+
+
+```
+
+
+
+
+
+
+```{r}
+resLFC52 = as.data.frame(resLFC5)
+
+resLFC52 <- resLFC52[complete.cases(resLFC52), ]
+
+resLFC52 <-resLFC52 %>% 
+  mutate(point_color = case_when(
+    pvalue < 0.05 & log2FoldChange < 0 ~ "down", # significantly down
+    pvalue < 0.05 & log2FoldChange > 0 ~ "up", # significantly up
+    TRUE ~ "Not differentially expressed") # not significant
+  )
+
+# Color points
+v2 <- ggplot(data=resLFC52, aes(x=log2FoldChange, y=-log10(pvalue), col = point_color)) + geom_point() + theme_minimal()
+
+v2
+
+resLFC52$RefSeq <- rownames(resLFC52)
+
+resLFC52$point_color = as.factor(resLFC52$point_color)
+levels(resLFC52$point_color)
+
+# Change colors
+v3 <- v2 + scale_color_manual(values = c("#5555ff", "lightgrey", "red3")) + theme(legend.position = "none") + geom_text(label=resLFC52$RefSeq,
+    nudge_x=0.45, nudge_y=0.1,
+    check_overlap=F)
+
+v3
+
+# Vamos remover o "outlier" para observar melhor o volcano plot
+
+
+
+resLFC52 <- subset(resLFC52,RefSeq!='ENSG00000229807.12')
+
+
+
+# Color points
+v4 <- ggplot(data=resLFC52, aes(x=log2FoldChange, y=-log10(pvalue), col = point_color)) + geom_point() + theme_minimal()
+
+v4
+
+resLFC52$RefSeq <- rownames(resLFC52)
+
+resLFC52$point_color = as.factor(resLFC52$point_color)
+levels(resLFC52$point_color)
+
+# Change colors
+v5 <- v4 + scale_color_manual(values = c("#5555ff", "lightgrey", "red3")) + theme(legend.position = "none") + geom_text(label=resLFC52$RefSeq,
+    nudge_x=0.85, nudge_y=0.2,
+    check_overlap=T)
+
+v5
+
+
+```
+
+
+
+## Genes diferencialmente expressados com extração de ruído:
+
+```{r}
+
+library(dplyr)
+
+filtering1 <- resLFC52 %>% filter(resLFC52$padj <0.05)
+
+filtering1 <- filtering1 %>% filter(abs(filtering1$log2FoldChange) >1)
+
+filtering1
+
+#temos 116 genes differentially expressed
+```
+
+```{r}
+plotPCA(ntd,intgroup=c("cell_type","treatment"))
+
+
+
+pcaData <-plotPCA(ntd,intgroup=c("cell_type","treatment"),returnData=TRUE)
+percentVar <-round(100*attr(pcaData,"percentVar"))
+
+ggplot(pcaData,aes(PC1, PC2,color=treatment,shape=cell_type))+geom_point(size=3)+xlab(paste0("PC1:",percentVar[1],"% variance"))+ylab(paste0("PC2: ",percentVar[2],"% variance"))+coord_fixed()
+```
+
+
+
+```{r}
+plotPCA(ntd,intgroup=c("time_point","cell_type"))
+
+
+
+pcaData <-plotPCA(ntd,intgroup=c("time_point","cell_type"),returnData=TRUE)
+percentVar <-round(100*attr(pcaData,"percentVar"))
+
+ggplot(pcaData,aes(PC1, PC2,color=cell_type,shape=time_point))+geom_point(size=3)+xlab(paste0("PC1:",percentVar[1],"% variance"))+ylab(paste0("PC2: ",percentVar[2],"% variance"))+coord_fixed()
+```
+
+
+```{r}
+plotPCA(ntd,intgroup=c("time_point","treatment"))
+
+
+
+pcaData <-plotPCA(ntd,intgroup=c("time_point","treatment"),returnData=TRUE)
+percentVar <-round(100*attr(pcaData,"percentVar"))
+
+ggplot(pcaData,aes(PC1, PC2,color=treatment,shape=time_point))+geom_point(size=3)+xlab(paste0("PC1:",percentVar[1],"% variance"))+ylab(paste0("PC2: ",percentVar[2],"% variance"))+coord_fixed()
+```
+
+```{r}
+genes_to_test <- rownames(filtering1)
+genes_to_test
+```
+
+```{r}
+genes_to_test <- gsub("\\..*","",genes_to_test)
+genes_to_test
+```
+
+
+```{r}
+Go_results <- enrichGO(gene = genes_to_test, OrgDb = "org.Hs.eg.db", keyType = "ENSEMBL", ont = "BP")
+```
+
+```{r}
+as.data.frame(Go_results)
+```
+
+
+```{r,fig.width=15,fig.height=20}
+fit <- plot(barplot(Go_results,showCategory = 20))
+
+fit
+```
+
+
+## Volcano Plot with GO information
+
+```{r}
+rownames(filtering1) <- gsub("\\..*","",rownames(filtering1))
+head(filtering1)
+
+res.df <- as.data.frame(filtering1)
+res.df$Symbol <- mapIds(org.Hs.eg.db, keys = rownames(res.df), keytype = "ENSEMBL", column = "SYMBOL")
+res.df
+```
+
+
+```{r}
+EnhancedVolcano(res.df, x= "log2FoldChange", y = "padj", lab = rownames(res.df))
+
+EnhancedVolcano(res.df, x= "log2FoldChange", y = "padj", lab = res.df$Symbol)
+```
+```{r, fig.height=12,fig.width=10}
+EnhancedVolcano(res.df, x= "log2FoldChange", y = "padj", lab = rownames(res.df),
+    title = 'Insulin vs Placebo',
+    FCcutoff = 1.5,
+    pointSize = 3.0,
+    labSize = 6.0,
+    drawConnectors = TRUE,
+    widthConnectors = 0.75)
+```
+
+
+## Lets select the top 10 genes:
+
+```{r}
+selected <- rownames(filtering1)[1:10]
+```
+
+```{r}
+EnhancedVolcano(res.df, x= "log2FoldChange", y = "padj", lab = res.df$Symbol, selectLab = selected)
+
+```
+
+
+```{r}
+rownames(filtering1) <- gsub("\\..*","",rownames(filtering1))
+rownames(filtering1)
+```
+```{r}
+li <- list(rownames(filtering1))
+
+write.csv(li,file="li.csv",row.names=F)
+
+```
+
+## now just copy this list to the DAVID Gene ONTOLOGY in:
+https://david.ncifcrf.gov/tools.jsp
+
+
+
+
+
+
+
+
+
+
